@@ -10,7 +10,7 @@ class Categoria (
      var nome: String = "",
      @Id
      @GeneratedValue(strategy = GenerationType.IDENTITY)
-     var id: Int = 0
+     var id: Int? = null
 ) {
      override fun equals(other: Any?): Boolean {
           if (this === other) return true
@@ -18,12 +18,12 @@ class Categoria (
 
           other as Categoria
 
-          if (nome != other.nome) return false
+          if (id != other.id) return false
 
           return true
      }
 
      override fun hashCode(): Int {
-          return nome.hashCode()
+          return id ?: 0
      }
 }
