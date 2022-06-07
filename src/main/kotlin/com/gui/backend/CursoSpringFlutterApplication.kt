@@ -1,5 +1,6 @@
 package com.gui.backend
 
+import com.gui.backend.domain.Categoria
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication
 
