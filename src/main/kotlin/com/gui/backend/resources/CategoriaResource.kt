@@ -11,7 +11,7 @@ class CategoriaResource {
 
     @GetMapping
     fun findAll(): List<Categoria> = listOf(
-        Categoria(1, "eletrônicos"),
-        Categoria(2, "facas")
+        Categoria("Eletrônicos", 1),
+        Categoria("")
     )
 }
