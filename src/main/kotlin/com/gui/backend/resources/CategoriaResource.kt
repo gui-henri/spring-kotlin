@@ -1,6 +1,6 @@
 package com.gui.backend.resources
 
-import com.gui.backend.CategoriaService
+import com.gui.backend.services.CategoriaService
 import com.gui.backend.domain.Categoria
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.GetMapping
@@ -14,7 +14,7 @@ class CategoriaResource(private val service: CategoriaService) {
 
     @GetMapping(value = ["/{id}"])
     fun findById(@PathVariable id: Int): ResponseEntity<Categoria> {
-        return ResponseEntity.ok().body(service.buscar(id))
+        return ResponseEntity.ok().body(service.findById(id))
     }
 
 }

@@ -7,7 +7,7 @@ import javax.persistence.Id
 
 @Entity
 class Categoria (
-     var nome: String = "",
+     var nome: String,
      @Id
      @GeneratedValue(strategy = GenerationType.IDENTITY)
      var id: Int? = null

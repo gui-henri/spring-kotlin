@@ -1,4 +1,4 @@
-package com.gui.backend
+package com.gui.backend.services
 
 import com.gui.backend.domain.Categoria
 import com.gui.backend.repositories.CategoriaRepository
@@ -8,7 +8,7 @@ import java.util.Optional
 @Service
 class CategoriaService(private val repo: CategoriaRepository) {
 
-    fun buscar(id: Int): Categoria? {
+    fun findById(id: Int): Categoria? {
         val categoria: Optional<Categoria> = repo.findById(id)
         return categoria.orElse(null)
     }
