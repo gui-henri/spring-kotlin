@@ -1,7 +1,7 @@
 package com.gui.backend.resources
 
-import com.gui.backend.services.CategoriaService
 import com.gui.backend.domain.Categoria
+import com.gui.backend.services.CategoriaService
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
