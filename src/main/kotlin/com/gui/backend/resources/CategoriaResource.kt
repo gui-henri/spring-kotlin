@@ -17,11 +17,8 @@ class CategoriaResource(private val service: CategoriaService) {
 
     @GetMapping(value = ["/{id}"])
     fun findById(@PathVariable id: Int): ResponseEntity<Categoria> {
-        val obj: Categoria = try {
-            service.findById(id)
-        } catch (e: ObjectNotFoundException) {
-            throw ResponseStatusException(HttpStatus.NOT_FOUND, e.localizedMessage, e)
-        }
+        val obj: Categoria = service.findById(id)
+
         return ResponseEntity.ok().body(obj)
     }
 
