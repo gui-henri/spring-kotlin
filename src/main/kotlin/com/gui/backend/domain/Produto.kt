@@ -1,5 +1,6 @@
 package com.gui.backend.domain
 
+import com.fasterxml.jackson.annotation.JsonBackReference
 import javax.persistence.Entity
 import javax.persistence.GeneratedValue
 import javax.persistence.GenerationType
@@ -17,6 +18,7 @@ data class Produto(
     var nome: String? = null,
     var preco: Double? = null,
 
+    @JsonBackReference
     @ManyToMany
     @JoinTable(
         name = "PRODUTO_CATEGORIA",
