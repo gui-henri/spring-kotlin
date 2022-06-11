@@ -25,5 +25,5 @@ data class Produto(
         joinColumns = [JoinColumn(name = "produto_id")],
         inverseJoinColumns = [JoinColumn(name = "categoria_id")]
     )
-    var categorias: MutableList<Categoria> = mutableListOf()
+    val categorias: MutableList<Categoria> = mutableListOf()
 )
