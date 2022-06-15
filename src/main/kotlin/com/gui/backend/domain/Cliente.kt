@@ -25,5 +25,8 @@ data class Cliente(
 
     @ElementCollection
     @CollectionTable(name = "TELEFONE")
-    var listaTelefone: MutableSet<String> = mutableSetOf()
+    var listaTelefone: MutableSet<String> = mutableSetOf(),
+
+    @OneToMany(mappedBy = "cliente")
+    var listaDePedidos: MutableList<Pedido> = mutableListOf()
 )

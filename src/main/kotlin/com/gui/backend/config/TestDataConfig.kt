@@ -1,10 +1,12 @@
 package com.gui.backend.config
 
 import com.gui.backend.domain.*
+import com.gui.backend.domain.enums.EstadoPagamento
 import com.gui.backend.domain.enums.TipoCliente
 import com.gui.backend.repositories.*
 import org.springframework.boot.CommandLineRunner
 import org.springframework.context.annotation.Configuration
+import java.text.SimpleDateFormat
 
 @Configuration
 class TestDataConfig(
@@ -13,7 +15,9 @@ class TestDataConfig(
     val cidadeRepository: CidadeRepository,
     val estadoRepository: EstadoRepository,
     val clienteRepository: ClienteRepository,
-    val enderecoRepository: EnderecoRepository
+    val enderecoRepository: EnderecoRepository,
+    val pedidoRepository: PedidoRepository,
+    val pagamentoRepository: PagamentoRepository
     ): CommandLineRunner {
 
     override fun run(vararg args: String?) {
@@ -82,5 +86,46 @@ class TestDataConfig(
 
         clienteRepository.save(cliente)
         enderecoRepository.saveAll(listOf(endereco, endereco2))
+
+        val sdf = SimpleDateFormat("dd/MM/yyyy HH:mm")
+        val pedido = Pedido(
+            null,
+            sdf.parse("30/09/2022 10:32"),
+            null,
+            cliente,
+            endereco
+        )
+
+        val pedido2 = Pedido(
+            null,
+            sdf.parse("10/10/2022 10:32"),
+            null,
+            cliente,
+            endereco2
+        )
+
+        val pagamento = PagamentoComCartao(
+            null,
+            EstadoPagamento.QUITADO.id,
+            pedido,
+            6
+        )
+
+        pedido.pagamento = pagamento
+
+        val pagamento2 = PagamentoComBoleto(
+            null,
+            EstadoPagamento.PENDENTE.id,
+            pedido2,
+            sdf.parse("20/10/2022 00:00"),
+            null
+        )
+
+        pedido2.pagamento = pagamento2
+
+        cliente.listaDePedidos.addAll(listOf(pedido, pedido2))
+
+        pedidoRepository.saveAll(listOf(pedido, pedido2))
+        pagamentoRepository.saveAll(listOf(pagamento, pagamento2))
     }
 }
