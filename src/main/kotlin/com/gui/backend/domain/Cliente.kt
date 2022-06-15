@@ -1,5 +1,6 @@
 package com.gui.backend.domain
 
+import com.fasterxml.jackson.annotation.JsonManagedReference
 import javax.persistence.CollectionTable
 import javax.persistence.ElementCollection
 import javax.persistence.Entity
@@ -16,8 +17,9 @@ data class Cliente(
     var nome: String? = null,
     var email: String? = null,
     var cpfOuCnpj: String? = null,
-    var tipo: Int,
+    var tipo: Int? = null,
 
+    @JsonManagedReference
     @OneToMany(mappedBy = "cliente")
     var listaEndereco: MutableList<Endereco> = mutableListOf(),
 

@@ -1,5 +1,6 @@
 package com.gui.backend.domain
 
+import com.fasterxml.jackson.annotation.JsonBackReference
 import javax.persistence.Entity
 import javax.persistence.GeneratedValue
 import javax.persistence.GenerationType
@@ -13,6 +14,7 @@ data class Estado(
     var id: Int? = null,
     var nome: String? = null,
 
+    @JsonBackReference
     @OneToMany(mappedBy = "estado")
     val cidades: MutableList<Cidade> = mutableListOf()
 )
