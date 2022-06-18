@@ -3,6 +3,7 @@ package com.gui.backend.config
 import com.gui.backend.domain.*
 import com.gui.backend.domain.enums.EstadoPagamento
 import com.gui.backend.domain.enums.TipoCliente
+import com.gui.backend.domain.pks.ItemPedidoPK
 import com.gui.backend.repositories.*
 import org.springframework.boot.CommandLineRunner
 import org.springframework.context.annotation.Configuration
@@ -17,7 +18,8 @@ class TestDataConfig(
     val clienteRepository: ClienteRepository,
     val enderecoRepository: EnderecoRepository,
     val pedidoRepository: PedidoRepository,
-    val pagamentoRepository: PagamentoRepository
+    val pagamentoRepository: PagamentoRepository,
+    val itemPedidoRepository: ItemPedidoRepository
     ): CommandLineRunner {
 
     override fun run(vararg args: String?) {
@@ -127,5 +129,35 @@ class TestDataConfig(
 
         pedidoRepository.saveAll(listOf(pedido, pedido2))
         pagamentoRepository.saveAll(listOf(pagamento, pagamento2))
+
+        val itemPedido = ItemPedido(
+            ItemPedido.createIdFrom(pedido, prod),
+            0.00,
+            1,
+            2000.0
+        )
+
+        val itemPedido2 = ItemPedido(
+            ItemPedido.createIdFrom(pedido, prod3),
+            0.00,
+            2,
+            80.0
+        )
+
+        val itemPedido3 = ItemPedido(
+            ItemPedido.createIdFrom(pedido2, prod2),
+            100.00,
+            1,
+            800.0
+        )
+
+        pedido.itens.addAll(listOf(itemPedido, itemPedido2))
+        pedido2.itens.addAll(listOf(itemPedido3))
+
+        prod.itens.add(itemPedido)
+        prod2.itens.add(itemPedido3)
+        prod3.itens.add(itemPedido2)
+
+        itemPedidoRepository.saveAll(listOf(itemPedido, itemPedido2, itemPedido3))
     }
 }

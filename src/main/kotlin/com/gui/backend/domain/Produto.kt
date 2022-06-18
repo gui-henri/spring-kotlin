@@ -9,9 +9,10 @@ import javax.persistence.JoinColumn
 import javax.persistence.JoinColumns
 import javax.persistence.JoinTable
 import javax.persistence.ManyToMany
+import javax.persistence.OneToMany
 
 @Entity
-data class Produto(
+class Produto(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     var id: Int? = null,
@@ -25,5 +26,23 @@ data class Produto(
         joinColumns = [JoinColumn(name = "produto_id")],
         inverseJoinColumns = [JoinColumn(name = "categoria_id")]
     )
-    val categorias: MutableList<Categoria> = mutableListOf()
-)
+    val categorias: MutableList<Categoria> = mutableListOf(),
+
+    @OneToMany(mappedBy = "id.produto")
+    var itens: MutableSet<ItemPedido> = mutableSetOf(),
+) {
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (javaClass != other?.javaClass) return false
+
+        other as Produto
+
+        if (id != other.id) return false
+
+        return true
+    }
+
+    override fun hashCode(): Int {
+        return id ?: 0
+    }
+}
