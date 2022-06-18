@@ -6,7 +6,7 @@ import javax.persistence.Entity
 @Entity
 class PagamentoComCartao(
     id: Int? = null,
-    estadoPagamento: Int? = null,
+    estadoPagamento: String? = null,
     pedido: Pedido? = null,
     var numeroDeParcelas: Int? = null
 

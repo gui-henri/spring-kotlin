@@ -1,6 +1,7 @@
 package com.gui.backend.domain
 
 import com.fasterxml.jackson.annotation.JsonBackReference
+import com.fasterxml.jackson.annotation.JsonIgnore
 import javax.persistence.Entity
 import javax.persistence.GeneratedValue
 import javax.persistence.GenerationType
@@ -28,6 +29,7 @@ class Produto(
     )
     val categorias: MutableList<Categoria> = mutableListOf(),
 
+    @JsonIgnore
     @OneToMany(mappedBy = "id.produto")
     var itens: MutableSet<ItemPedido> = mutableSetOf(),
 ) {

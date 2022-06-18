@@ -1,5 +1,7 @@
 package com.gui.backend.domain
 
+import com.fasterxml.jackson.annotation.JsonFormat
+import com.fasterxml.jackson.annotation.JsonManagedReference
 import java.util.Date
 import javax.persistence.CascadeType
 import javax.persistence.Entity
@@ -16,11 +18,14 @@ class Pedido (
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     var id: Int? = null,
+    @JsonFormat(pattern = "dd/MM/yyyy HH:mm")
     var instant: Date? = null,
 
+    @JsonManagedReference
     @OneToOne(cascade = [CascadeType.ALL], mappedBy = "pedido")
     var pagamento: Pagamento? = null,
 
+    @JsonManagedReference
     @ManyToOne
     @JoinColumn(name = "cliente_id")
     var cliente: Cliente? = null,

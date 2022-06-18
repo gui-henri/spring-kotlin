@@ -57,7 +57,7 @@ class TestDataConfig(
             "Sarah",
             "sarah@slutmail.com",
             "123.123.321-73",
-            TipoCliente.PESSOA_FISICA.id
+            TipoCliente.PESSOA_FISICA.descricao
         )
 
         cliente.listaTelefone.addAll(listOf("69696969", "24242424"))
@@ -108,7 +108,7 @@ class TestDataConfig(
 
         val pagamento = PagamentoComCartao(
             null,
-            EstadoPagamento.QUITADO.id,
+            EstadoPagamento.QUITADO.descricao,
             pedido,
             6
         )
@@ -117,7 +117,7 @@ class TestDataConfig(
 
         val pagamento2 = PagamentoComBoleto(
             null,
-            EstadoPagamento.PENDENTE.id,
+            EstadoPagamento.PENDENTE.descricao,
             pedido2,
             sdf.parse("20/10/2022 00:00"),
             null

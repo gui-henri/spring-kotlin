@@ -1,5 +1,6 @@
 package com.gui.backend.domain
 
+import com.fasterxml.jackson.annotation.JsonBackReference
 import com.gui.backend.domain.enums.EstadoPagamento
 import javax.persistence.*
 
@@ -8,8 +9,9 @@ import javax.persistence.*
 abstract class Pagamento (
     @Id
     var id: Int? = null,
-    var estadoPagamento: Int? = null,
+    var estadoPagamento: String? = null,
 
+    @JsonBackReference
     @OneToOne
     @JoinColumn(name = "pedido_id")
     @MapsId
