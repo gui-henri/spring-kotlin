@@ -21,11 +21,9 @@ class Pedido (
     @JsonFormat(pattern = "dd/MM/yyyy HH:mm")
     var instant: Date? = null,
 
-    @JsonManagedReference
     @OneToOne(cascade = [CascadeType.ALL], mappedBy = "pedido")
     var pagamento: Pagamento? = null,
 
-    @JsonManagedReference
     @ManyToOne
     @JoinColumn(name = "cliente_id")
     var cliente: Cliente? = null,

@@ -15,7 +15,6 @@ data class Cidade(
     var id: Int? = null,
     var nome: String? = null,
 
-    @JsonManagedReference
     @ManyToOne
     @JoinColumn(name = "estado_id")
     var estado: Estado? = null

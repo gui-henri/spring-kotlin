@@ -1,6 +1,7 @@
 package com.gui.backend.domain
 
 import com.fasterxml.jackson.annotation.JsonBackReference
+import com.fasterxml.jackson.annotation.JsonIgnore
 import javax.persistence.Entity
 import javax.persistence.GeneratedValue
 import javax.persistence.GenerationType
@@ -19,7 +20,7 @@ data class Endereco(
     var bairro: String? = null,
     var cep: String? = null,
 
-    @JsonBackReference
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "cliente_id")
     var cliente: Cliente? = null,

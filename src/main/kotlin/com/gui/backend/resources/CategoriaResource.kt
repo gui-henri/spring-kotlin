@@ -2,24 +2,33 @@ package com.gui.backend.resources
 
 import com.gui.backend.domain.Categoria
 import com.gui.backend.services.CategoriaService
-import com.gui.backend.services.exceptions.ObjectNotFoundException
-import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
+import org.springframework.web.bind.annotation.PostMapping
+import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
-import org.springframework.web.server.ResponseStatusException
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder
+import java.net.URI
 
 @RestController
 @RequestMapping(value = ["/categorias"])
 class CategoriaResource(private val service: CategoriaService) {
 
     @GetMapping(value = ["/{id}"])
-    fun findById(@PathVariable id: Int): ResponseEntity<Categoria> {
-        val obj: Categoria = service.findById(id)
+    fun findById(@PathVariable id: Int): ResponseEntity<Categoria> =
+        ResponseEntity.ok().body(service.findById(id))
 
-        return ResponseEntity.ok().body(obj)
+    @PostMapping()
+    fun insert(@RequestBody categoria: Categoria): ResponseEntity<Void> {
+        val novaCategoria = service.insert(categoria)
+        val url: URI = ServletUriComponentsBuilder
+            .fromCurrentRequest()
+            .path("/{id}")
+            .buildAndExpand(novaCategoria.id)
+            .toUri()
+        return ResponseEntity.created(url).build()
     }
 
 }

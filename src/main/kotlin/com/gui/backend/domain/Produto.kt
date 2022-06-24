@@ -20,7 +20,7 @@ class Produto(
     var nome: String? = null,
     var preco: Double? = null,
 
-    @JsonBackReference
+    @JsonIgnore
     @ManyToMany
     @JoinTable(
         name = "PRODUTO_CATEGORIA",

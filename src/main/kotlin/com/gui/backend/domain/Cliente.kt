@@ -1,6 +1,7 @@
 package com.gui.backend.domain
 
 import com.fasterxml.jackson.annotation.JsonBackReference
+import com.fasterxml.jackson.annotation.JsonIgnore
 import com.fasterxml.jackson.annotation.JsonManagedReference
 import javax.persistence.CollectionTable
 import javax.persistence.ElementCollection
@@ -20,7 +21,6 @@ data class Cliente(
     var cpfOuCnpj: String? = null,
     var tipo: String? = null,
 
-    @JsonManagedReference
     @OneToMany(mappedBy = "cliente")
     var listaEndereco: MutableList<Endereco> = mutableListOf(),
 
@@ -28,7 +28,7 @@ data class Cliente(
     @CollectionTable(name = "TELEFONE")
     var listaTelefone: MutableSet<String> = mutableSetOf(),
 
-    @JsonBackReference
+    @JsonIgnore
     @OneToMany(mappedBy = "cliente")
     var listaDePedidos: MutableList<Pedido> = mutableListOf()
 )
