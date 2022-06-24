@@ -5,6 +5,7 @@ import com.gui.backend.repositories.CategoriaRepository
 import com.gui.backend.services.exceptions.ObjectNotFoundException
 import org.springframework.stereotype.Service
 import java.util.Optional
+import kotlin.jvm.optionals.getOrNull
 
 @Service
 class CategoriaService(private val repo: CategoriaRepository) {
@@ -18,4 +19,11 @@ class CategoriaService(private val repo: CategoriaRepository) {
         categoria.id = null
         return repo.save(categoria)
     }
+
+    fun update(categoria: Categoria, id: Int): Categoria {
+        categoria.id = id
+        findById(id)
+        return repo.save(categoria)
+    }
+
 }
