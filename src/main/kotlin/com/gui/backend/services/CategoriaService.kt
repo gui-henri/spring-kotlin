@@ -2,7 +2,9 @@ package com.gui.backend.services
 
 import com.gui.backend.domain.Categoria
 import com.gui.backend.repositories.CategoriaRepository
+import com.gui.backend.services.exceptions.DataIntegrityException
 import com.gui.backend.services.exceptions.ObjectNotFoundException
+import org.springframework.dao.DataIntegrityViolationException
 import org.springframework.stereotype.Service
 import java.util.Optional
 import kotlin.jvm.optionals.getOrNull
@@ -24,6 +26,15 @@ class CategoriaService(private val repo: CategoriaRepository) {
         categoria.id = id
         findById(id)
         return repo.save(categoria)
+    }
+
+    fun delete(id: Int) {
+        findById(id)
+        try {
+            return repo.deleteById(id)
+        }catch (e: DataIntegrityViolationException){
+            throw DataIntegrityException("Não é possível excluir categoria que possui produtos")
+        }
     }
 
 }
