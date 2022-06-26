@@ -1,6 +1,7 @@
 package com.gui.backend.resources
 
 import com.gui.backend.domain.Categoria
+import com.gui.backend.dto.CategoriaDTO
 import com.gui.backend.services.CategoriaService
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.DeleteMapping
@@ -21,6 +22,13 @@ class CategoriaResource(private val service: CategoriaService) {
     @GetMapping(value = ["/{id}"])
     fun findById(@PathVariable id: Int): ResponseEntity<Categoria> =
         ResponseEntity.ok().body(service.findById(id))
+
+    @GetMapping()
+    fun findAll(): ResponseEntity<List<CategoriaDTO>> {
+        val listCategoria = service.findAll()
+        val listCategoriaDTO = listCategoria.map { categoria -> CategoriaDTO.createFromCategoria(categoria) }
+        return ResponseEntity.ok().body(listCategoriaDTO)
+    }
 
     @PostMapping()
     fun insert(@RequestBody categoria: Categoria): ResponseEntity<Void> {

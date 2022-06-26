@@ -17,6 +17,8 @@ class CategoriaService(private val repo: CategoriaRepository) {
         return categoria.orElseThrow{ObjectNotFoundException("Id não encontrado")}
     }
 
+    fun findAll(): List<Categoria> = repo.findAll()
+
     fun insert(categoria: Categoria): Categoria {
         categoria.id = null
         return repo.save(categoria)
