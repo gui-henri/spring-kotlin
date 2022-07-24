@@ -25,6 +25,11 @@ class TestDataConfig(
     override fun run(vararg args: String?) {
         val cat = Categoria(null, "Informática")
         val cat2 = Categoria(null, "Escritório")
+        val cat3 = Categoria(null, "Cama mesa e banho")
+        val cat4 = Categoria(null, "Eletrônicos")
+        val cat5 = Categoria(null, "Jardinagem")
+        val cat6 = Categoria(null, "Decoração")
+        val cat7 = Categoria(null, "Perfumaria")
 
         val prod = Produto(null, "Computador", 2000.0)
         val prod2 = Produto(null, "Impressora", 800.0)
@@ -49,7 +54,7 @@ class TestDataConfig(
 
         estadoRepository.saveAll(listOf(estado, estado2))
         cidadeRepository.saveAll(listOf(cit, cit2, cit3))
-        categoryRepository.saveAll(listOf(cat, cat2))
+        categoryRepository.saveAll(listOf(cat, cat2, cat3, cat4, cat5, cat6, cat7))
         produtoRepository.saveAll(listOf(prod, prod2, prod3))
 
         val cliente = Cliente(

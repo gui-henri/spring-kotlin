@@ -5,6 +5,9 @@ import com.gui.backend.repositories.CategoriaRepository
 import com.gui.backend.services.exceptions.DataIntegrityException
 import com.gui.backend.services.exceptions.ObjectNotFoundException
 import org.springframework.dao.DataIntegrityViolationException
+import org.springframework.data.domain.Page
+import org.springframework.data.domain.PageRequest
+import org.springframework.data.domain.Sort
 import org.springframework.stereotype.Service
 import java.util.Optional
 import kotlin.jvm.optionals.getOrNull
@@ -37,6 +40,11 @@ class CategoriaService(private val repo: CategoriaRepository) {
         }catch (e: DataIntegrityViolationException){
             throw DataIntegrityException("Não é possível excluir categoria que possui produtos")
         }
+    }
+
+    fun findPage(page: Int, linesPerPage: Int, orderBy: String, direction: String): Page<Categoria> {
+        val pageRequest = PageRequest.of(page, linesPerPage, Sort.Direction.valueOf(direction), orderBy)
+        return repo.findAll(pageRequest)
     }
 
 }
