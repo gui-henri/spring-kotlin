@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.RestController
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder
 import java.net.URI
+import javax.validation.Valid
 
 @RestController
 @RequestMapping(value = ["/categorias"])
@@ -33,7 +34,8 @@ class CategoriaResource(private val service: CategoriaService) {
     }
 
     @PostMapping()
-    fun insert(@RequestBody categoria: Categoria): ResponseEntity<Void> {
+    fun insert(@Valid @RequestBody categoriaDTO: CategoriaDTO): ResponseEntity<Void> {
+        val categoria = Categoria.fromDTO(categoriaDTO)
         val novaCategoria = service.insert(categoria)
         val url: URI = ServletUriComponentsBuilder
             .fromCurrentRequest()
@@ -44,7 +46,8 @@ class CategoriaResource(private val service: CategoriaService) {
     }
 
     @PutMapping(value = ["/{id}"])
-    fun update(@RequestBody categoria: Categoria, @PathVariable id: Int): ResponseEntity<Void> {
+    fun update(@Valid @RequestBody categoriaDTO: CategoriaDTO, @PathVariable id: Int): ResponseEntity<Void> {
+        val categoria = Categoria.fromDTO(categoriaDTO)
         val updatedCat = service.update(categoria, id)
         return ResponseEntity.noContent().build()
     }

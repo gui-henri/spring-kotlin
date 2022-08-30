@@ -1,5 +1,6 @@
 package com.gui.backend.domain
 
+import com.gui.backend.dto.CategoriaDTO
 import javax.persistence.Entity
 import javax.persistence.GeneratedValue
 import javax.persistence.GenerationType
@@ -15,4 +16,8 @@ data class Categoria(
     
     @ManyToMany(mappedBy = "categorias")
     val produtos: MutableList<Produto> = mutableListOf()
-)
+) {
+    companion object {
+        fun fromDTO(dto: CategoriaDTO) = Categoria(dto.id, dto.nome)
+    }
+}
