@@ -29,8 +29,13 @@ class CategoriaService(private val repo: CategoriaRepository) {
 
     fun update(categoria: Categoria, id: Int): Categoria {
         categoria.id = id
-        findById(id)
-        return repo.save(categoria)
+        val novaCategoria = findById(id)
+        updateData(novaCategoria, categoria)
+        return repo.save(novaCategoria)
+    }
+
+    private fun updateData(novaCategoria: Categoria, categoria: Categoria) {
+        novaCategoria.nome = categoria.nome
     }
 
     fun delete(id: Int) {
