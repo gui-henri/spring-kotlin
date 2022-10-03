@@ -3,6 +3,7 @@ package com.gui.backend.domain
 import com.fasterxml.jackson.annotation.JsonBackReference
 import com.fasterxml.jackson.annotation.JsonIgnore
 import com.fasterxml.jackson.annotation.JsonManagedReference
+import com.gui.backend.dto.ClienteDTO
 import javax.persistence.CollectionTable
 import javax.persistence.ElementCollection
 import javax.persistence.Entity
@@ -31,4 +32,8 @@ data class Cliente(
     @JsonIgnore
     @OneToMany(mappedBy = "cliente")
     var listaDePedidos: MutableList<Pedido> = mutableListOf()
-)
+) {
+    companion object Factory{
+        fun fromDTO(clienteDTO: ClienteDTO) = Cliente(clienteDTO.id, clienteDTO.nome, clienteDTO.email)
+    }
+}

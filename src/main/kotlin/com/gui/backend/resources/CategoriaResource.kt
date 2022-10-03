@@ -48,7 +48,7 @@ class CategoriaResource(private val service: CategoriaService) {
     @PutMapping(value = ["/{id}"])
     fun update(@Valid @RequestBody categoriaDTO: CategoriaDTO, @PathVariable id: Int): ResponseEntity<Void> {
         val categoria = Categoria.fromDTO(categoriaDTO)
-        val updatedCat = service.update(categoria, id)
+        service.update(categoria, id)
         return ResponseEntity.noContent().build()
     }
 
