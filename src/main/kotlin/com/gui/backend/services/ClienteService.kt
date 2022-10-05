@@ -3,6 +3,7 @@ package com.gui.backend.services
 import com.gui.backend.domain.Categoria
 import com.gui.backend.domain.Cliente
 import com.gui.backend.repositories.ClienteRepository
+import com.gui.backend.repositories.EnderecoRepository
 import com.gui.backend.services.exceptions.DataIntegrityException
 import com.gui.backend.services.exceptions.ObjectNotFoundException
 import org.springframework.dao.DataIntegrityViolationException
@@ -10,10 +11,11 @@ import org.springframework.data.domain.Page
 import org.springframework.data.domain.PageRequest
 import org.springframework.data.domain.Sort
 import org.springframework.stereotype.Service
+import org.springframework.transaction.annotation.Transactional
 import java.util.Optional
 
 @Service
-class ClienteService(private val repo: ClienteRepository) {
+class ClienteService(private val repo: ClienteRepository, private val enderecoRepository: EnderecoRepository) {
 
     fun findById(id: Int): Cliente {
         val cliente: Optional<Cliente> = repo.findById(id)
@@ -21,6 +23,13 @@ class ClienteService(private val repo: ClienteRepository) {
     }
 
     fun findAll(): List<Cliente> = repo.findAll()
+
+    @Transactional
+    fun insert(cliente: Cliente): Cliente {
+        cliente.id = null
+        enderecoRepository.saveAll(cliente.listaEndereco)
+        return repo.save(cliente)
+    }
 
     fun update(cliente: Cliente, id: Int): Cliente {
         cliente.id = id

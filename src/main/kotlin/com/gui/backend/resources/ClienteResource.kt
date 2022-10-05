@@ -1,13 +1,17 @@
 package com.gui.backend.resources
 
 
+import com.gui.backend.domain.Categoria
 import com.gui.backend.domain.Cliente
 import com.gui.backend.dto.CategoriaDTO
 import com.gui.backend.dto.ClienteDTO
+import com.gui.backend.dto.ClienteNewDTO
 import com.gui.backend.services.ClienteService
 import org.springframework.data.domain.Page
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder
+import java.net.URI
 import javax.validation.Valid
 
 @RestController
@@ -26,6 +30,19 @@ class ClienteResource(private val service: ClienteService) {
         val listClienteDTO = listCliente.map { cliente -> ClienteDTO.createFromCliente(cliente) }
         return ResponseEntity.ok().body(listClienteDTO)
     }
+
+    @PostMapping()
+    fun insert(@Valid @RequestBody clienteNewDTO: ClienteNewDTO): ResponseEntity<Void> {
+        val clienteNew = Cliente.fromDTO(clienteNewDTO)
+        val novoCliente = service.insert(clienteNew)
+        val url: URI = ServletUriComponentsBuilder
+            .fromCurrentRequest()
+            .path("/{id}")
+            .buildAndExpand(novoCliente.id)
+            .toUri()
+        return ResponseEntity.created(url).build()
+    }
+
     @PutMapping(value = ["/{id}"])
     fun update(@Valid @RequestBody clienteDTO: ClienteDTO, @PathVariable id: Int): ResponseEntity<Void> {
         val cliente = Cliente.fromDTO(clienteDTO)
