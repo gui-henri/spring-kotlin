@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore
 import com.fasterxml.jackson.annotation.JsonManagedReference
 import com.gui.backend.dto.ClienteDTO
 import com.gui.backend.dto.ClienteNewDTO
+import javax.persistence.CascadeType
 import javax.persistence.CollectionTable
 import javax.persistence.ElementCollection
 import javax.persistence.Entity
@@ -23,7 +24,7 @@ data class Cliente(
     var cpfOuCnpj: String? = null,
     var tipo: String? = null,
 
-    @OneToMany(mappedBy = "cliente")
+    @OneToMany(mappedBy = "cliente", cascade = [CascadeType.ALL])
     var listaEndereco: MutableList<Endereco> = mutableListOf(),
 
     @ElementCollection
